@@ -9,3 +9,41 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+// An application reigstered for oauth, which users may sign in with
+model Application {
+  id                  Int                   @id @default(autoincrement())
+  name                String
+  allowedRedirectUris String[]
+  clientId            String
+  clientSecretHash    String
+  userAppRegistration UserAppRegistration[]
+}
+
+model User {
+  email         String                @unique
+  registrations UserAppRegistration[]
+}
+
+model UserAppRegistration {
+  id            Int         @id @default(autoincrement())
+  app           Application @relation(fields: [applicationId], references: [id])
+  user          User        @relation(fields: [userEmail], references: [email])
+  permissions   String[]
+  createdAt     DateTime    @default(now())
+  applicationId Int
+  userEmail     String
+  sessions      Session[]
+}
+
+model Session {
+  id                    Int                 @id @default(autoincrement())
+  token                 String // todo: should we hash?
+  registration          UserAppRegistration @relation(fields: [userAppRegistrationId], references: [id])
+  createdAt             DateTime
+  expiresAt             DateTime
+  // When a user authenticates, we call the redirect URI with a session token that has isTemporaryNonce=true.
+  // Then the app will call back with a token + client secret, which we will then exchange for a real session.
+  isTemporaryNonce      Boolean             @default(false)
+  userAppRegistrationId Int
+}
