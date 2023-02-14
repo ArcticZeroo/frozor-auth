@@ -22,4 +22,15 @@ export abstract class SessionRepository {
 			}
 		});
 	}
+
+	public static async getSessionByIdAsync(sessionId: string): Promise<Session & { user: User } | null> {
+		return prisma.session.findUnique({
+			where: {
+				token: sessionId
+			},
+			include: {
+				user: true
+			}
+		});
+	}
 }

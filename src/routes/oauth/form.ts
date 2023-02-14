@@ -5,6 +5,7 @@ import { SessionRepository } from '../../api/repository/session';
 import { UserRepository } from '../../api/repository/user';
 import { cookieNames } from '../../constants/cookies';
 import { formParser } from '../../middleware/forms.js';
+import { deserializeSession } from '../../middleware/session';
 import { RouteBuilder } from '../../models/route-builder.js';
 import { setCookie } from '../../util/cookie';
 import {
@@ -16,7 +17,12 @@ import {
 } from '../../util/validation.js';
 
 export const formRoutes: RouteBuilder = app => {
-    app.post('/login', formParser(), async ctx => {
+    app.post('/login', deserializeSession(), formParser(), async ctx => {
+        if (ctx.user) {
+            ctx.throw(403, 'Forbidden: User is already authenticated');
+            return;
+        }
+
         const formFields = ctx.state.form?.fields;
 
         if (!formFields) {
