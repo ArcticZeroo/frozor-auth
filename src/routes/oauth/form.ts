@@ -1,9 +1,12 @@
 import { generateSessionId } from '../../api/crypto/keygen';
 import { doPasswordsMatch } from '../../api/crypto/passwords';
 import { ApplicationRepository } from '../../api/repository/app';
+import { SessionRepository } from '../../api/repository/session';
 import { UserRepository } from '../../api/repository/user';
+import { cookieNames } from '../../constants/cookies';
 import { formParser } from '../../middleware/forms.js';
 import { RouteBuilder } from '../../models/route-builder.js';
+import { setCookie } from '../../util/cookie';
 import {
     isRedirectUriAllowed,
     isValidEmail,
@@ -52,6 +55,23 @@ export const formRoutes: RouteBuilder = app => {
             return;
         }
 
-        generateSessionId();
+        const session = await SessionRepository.createSession(user, false /*isTemporaryNonce*/);
+
+        setCookie(ctx, cookieNames.sessionId, session.token);
+
+        const isConsentRequired = false;
+
+        if (isConsentRequired) {
+            ctx.body = {
+                isConsentRequired: true
+            }
+        } else {
+            const temporaryNonceSession = await SessionRepository.createSession(user, true /*isTemporaryNonce*/);
+
+            ctx.body = {
+                isConsentRequired: false,
+                nonce: temporaryNonceSession.token
+            }
+        }
     });
 };

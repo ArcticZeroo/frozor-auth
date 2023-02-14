@@ -17,16 +17,17 @@ model Application {
   allowedRedirectUris String[]
   clientId            String
   clientSecretHash    String
-  userAppRegistration UserAppRegistration[]
+  userAppConsents     UserAppConsent[]
 }
 
 model User {
   email         String                @unique
   passwordHash  String
-  registrations UserAppRegistration[]
+  consents      UserAppConsent[]
+  Session       Session[]
 }
 
-model UserAppRegistration {
+model UserAppConsent {
   id            Int         @id @default(autoincrement())
   app           Application @relation(fields: [applicationId], references: [id])
   user          User        @relation(fields: [userEmail], references: [email])
@@ -37,12 +38,12 @@ model UserAppRegistration {
 }
 
 model Session {
-  id                    Int                 @id @default(autoincrement())
-  token                 String
-  createdAt             DateTime
-  expiresAt             DateTime
+  user             User     @relation(fields: [userEmail], references: [email])
+  userEmail        String
+  token            String   @unique
+  createdAt        DateTime
+  expiresAt        DateTime
   // When a user authenticates, we call the redirect URI with a session token that has isTemporaryNonce=true.
   // Then the app will call back with a token + client secret, which we will then exchange for a real session.
-  isTemporaryNonce      Boolean             @default(false)
-  userAppRegistrationId Int
+  isTemporaryNonce Boolean  @default(false)
 }
