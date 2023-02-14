@@ -34,13 +34,11 @@ model UserAppRegistration {
   createdAt     DateTime    @default(now())
   applicationId Int
   userEmail     String
-  sessions      Session[]
 }
 
 model Session {
   id                    Int                 @id @default(autoincrement())
-  token                 String // todo: should we hash?
-  registration          UserAppRegistration @relation(fields: [userAppRegistrationId], references: [id])
+  token                 String
   createdAt             DateTime
   expiresAt             DateTime
   // When a user authenticates, we call the redirect URI with a session token that has isTemporaryNonce=true.
