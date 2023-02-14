@@ -35,3 +35,12 @@ export const isValidHttpsUrl = (rawUrl: string) => {
         return false;
     }
 };
+
+const doesMatchRedirectUri = (actualUri: string, redirectUri: string): boolean => {
+    // todo
+    return true;
+};
+
+export const isRedirectUriAllowed = (actualUri: string, allowedUris: string[]): boolean => {
+    return allowedUris.some(allowedUri => doesMatchRedirectUri(actualUri, allowedUri));
+};

@@ -22,6 +22,7 @@ model Application {
 
 model User {
   email         String                @unique
+  passwordHash  String
   registrations UserAppRegistration[]
 }
 
