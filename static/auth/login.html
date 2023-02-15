@@ -4,19 +4,23 @@
 	<meta charset="UTF-8">
 	<title>Frozor Login</title>
 	<link rel="stylesheet" type="text/css" href="/login.css">
+	<script type="module" src="/login.js"></script>
 </head>
 <body>
 <form>
 	<div>
 		<label for="email">Email</label>
-		<input id="email"/>
+		<input id="email" type="email" required/>
 	</div>
 	<div>
 		<label for="password">Password</label>
-		<input id="password"/>
+		<input id="password" type="password" minlength="6" required/>
 	</div>
 	<div>
 		<input type="submit" value="Sign In"/>
+	</div>
+	<div id="error">
+
 	</div>
 </form>
 </body>
