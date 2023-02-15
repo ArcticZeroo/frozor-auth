@@ -3,6 +3,10 @@ import { SessionRepository } from '../api/repository/session';
 import { cookieNames } from '../constants/cookies';
 
 export const deserializeSession = (): Middleware => async (ctx) => {
+	if (ctx.user) {
+		return;
+	}
+
 	const sessionId = ctx.cookies.get(cookieNames.sessionId);
 
 	if (!sessionId) {

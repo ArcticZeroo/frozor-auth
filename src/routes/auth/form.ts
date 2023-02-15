@@ -12,7 +12,7 @@ import {
     isRedirectUriAllowed,
     isValidEmail,
     isValidHttpsUrl,
-    isValidPassword,
+    isValidPassword, validateClientId, validateOauthAppAndRedirect, validateRedirectUri,
     validateRequestValue
 } from '../../util/validation.js';
 
@@ -32,18 +32,10 @@ export const formRoutes: RouteBuilder = app => {
 
         const email = validateRequestValue(ctx, formFields['email'], 'Email', isValidEmail /*validator*/);
         const password = validateRequestValue(ctx, formFields['password'], 'Password', isValidPassword /*validator*/);
-        const clientId = validateRequestValue(ctx, formFields['client-id'], 'Client ID', clientId => Boolean(clientId.length) /*validator*/);
-        const redirectUri = validateRequestValue(ctx, formFields['redirect-uri'], 'Redirect URI', isValidHttpsUrl /*validator*/);
+        const clientId = validateClientId(ctx, formFields['client-id']);
+        const redirectUri = validateRedirectUri(ctx, formFields['redirect-uri']);
 
-        const application = await ApplicationRepository.retrieveApplicationByClientId(clientId);
-        if (!application) {
-            ctx.throw(403, 'Forbidden: Invalid client id');
-            return;
-        }
-
-        if (!isRedirectUriAllowed(redirectUri, application.allowedRedirectUris)) {
-            ctx.throw(403, 'Forbidden: Disallowed redirect URI')
-        }
+        const application = await validateOauthAppAndRedirect({ ctx, clientId, redirectUri });
 
         const user = await UserRepository.retrieveUserByEmail(email);
         if (!user) {
@@ -60,6 +52,8 @@ export const formRoutes: RouteBuilder = app => {
             ctx.throw(403, 'Forbidden: Invalid Credentials');
             return;
         }
+
+        ctx.user = user;
 
         const session = await SessionRepository.createSession(user, false /*isTemporaryNonce*/);
 
