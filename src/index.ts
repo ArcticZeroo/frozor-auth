@@ -3,3 +3,5 @@ import { webserverPort } from './server/config.js';
 
 console.log('Starting server on port', webserverPort);
 app.listen(webserverPort);
+
+// todo: cleanup old sessions
