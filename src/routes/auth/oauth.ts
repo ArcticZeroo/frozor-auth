@@ -1,11 +1,9 @@
 import send from 'koa-send';
-import serve from 'koa-static';
-import path from 'path';
 import { buildRedirectUri } from '../../api/auth/oauth.js';
 import { SessionRepository } from '../../api/repository/session.js';
 import { deserializeSession } from '../../middleware/session.js';
 import { RouteBuilder } from '../../models/route-builder.js';
-import { publicFolderPath } from '../../server/config.js';
+import { staticFolderPath } from '../../server/config.js';
 import { validateClientId, validateOauthAppAndRedirect, validateRedirectUri } from '../../util/validation.js';
 
 export const oauthRoutes: RouteBuilder = (app) => {
@@ -34,8 +32,6 @@ export const oauthRoutes: RouteBuilder = (app) => {
 			return;
 		}
 
-		await send(ctx, path.join(publicFolderPath, 'auth/login.html'));
+		await send(ctx, 'auth/login.html', { root: staticFolderPath });
 	});
-
-	app.use(serve(path.join(publicFolderPath, 'auth')));
 };
