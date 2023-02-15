@@ -10,6 +10,11 @@ const timeHashMsSync = (rounds: number): number => {
 }
 
 export const findIdealCost = () => {
+    // todo: remove this
+    return minimumCostRounds;
+
+    console.log('Finding ideal password hash cost');
+
     let lastHashTimeMs = 0;
     let currentCost = minimumCostRounds;
     while (true) {
