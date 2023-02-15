@@ -1,8 +1,5 @@
 import Router from '@koa/router';
-import serve from 'koa-static';
-import path from 'path';
 import { RouteBuilder } from '../../models/route-builder';
-import { publicFolderPath } from '../../server/config';
 import { formRoutes } from './form';
 import { oauthRoutes } from './oauth';
 

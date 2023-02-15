@@ -1,18 +1,17 @@
-import { generateSessionId } from '../../api/crypto/keygen';
 import { doPasswordsMatch } from '../../api/crypto/passwords';
-import { ApplicationRepository } from '../../api/repository/app';
 import { SessionRepository } from '../../api/repository/session';
 import { UserRepository } from '../../api/repository/user';
 import { cookieNames } from '../../constants/cookies';
 import { formParser } from '../../middleware/forms.js';
-import { deserializeSession } from '../../middleware/session';
+import { deserializeSession } from '../../middleware/session.js';
 import { RouteBuilder } from '../../models/route-builder.js';
-import { setCookie } from '../../util/cookie';
+import { setCookie } from '../../util/cookie.js';
 import {
-    isRedirectUriAllowed,
     isValidEmail,
-    isValidHttpsUrl,
-    isValidPassword, validateClientId, validateOauthAppAndRedirect, validateRedirectUri,
+    isValidPassword,
+    validateClientId,
+    validateOauthAppAndRedirect,
+    validateRedirectUri,
     validateRequestValue
 } from '../../util/validation.js';
 
