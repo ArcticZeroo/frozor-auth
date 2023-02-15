@@ -7,4 +7,4 @@ export interface IKoaState {
     user?: User;
 }
 
-export type ServiceContext = Context & IKoaState;
+export type StatefulContext = Context & { state: IKoaState };

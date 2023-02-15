@@ -1,14 +1,37 @@
 import { Application, User } from '@prisma/client';
-import { ServiceContext } from '../../models/koa.js';
+import { cookieNames } from '../../constants/cookies.js';
+import { StatefulContext } from '../../models/koa.js';
+import { setCookie } from '../../util/cookie.js';
+import { SessionRepository } from '../repository/session.js';
 
 interface IHandleOauthConsentParams {
-	ctx: ServiceContext,
+	ctx: StatefulContext,
 	user: User,
-	application: Application
+	application: Application,
+	scopes: string[]
 }
 
-export const handleOauthConsent = ({ ctx, user, application }: IHandleOauthConsentParams) => {
+export const handleSignInSuccess = async ({ ctx, user, application, scopes }: IHandleOauthConsentParams) => {
+	ctx.state.user = user;
+
+	const session = await SessionRepository.createSession(user, false /*isTemporaryNonce*/);
+
+	setCookie(ctx, cookieNames.sessionId, session.token);
+
 	const isConsentRequired = false;
+
+	if (isConsentRequired) {
+		ctx.body = {
+			isConsentRequired: true
+		}
+	} else {
+		const temporaryNonceSession = await SessionRepository.createSession(user, true /*isTemporaryNonce*/);
+
+		ctx.body = {
+			isConsentRequired: false,
+			nonce: temporaryNonceSession.token
+		}
+	}
 };
 
 interface IBuildRedirectUriParams {

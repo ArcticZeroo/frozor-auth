@@ -8,7 +8,7 @@ import { suppressPromiseError } from '../util/async.js';
 
 const allowedContentTypes = [httpContentType.formMultipart, httpContentType.formMultipart];
 
-const parseForm = async (request: IncomingMessage, options?: formidable.Options): Promise<IParsedForm> => {
+export const parseForm = async (request: IncomingMessage, options?: formidable.Options): Promise<IParsedForm> => {
     const form = formidable(options);
 
     return new Promise((resolve, reject) => {
