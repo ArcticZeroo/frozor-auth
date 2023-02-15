@@ -10,6 +10,6 @@ export const registerRoutes = (app: Koa<IKoaState>) => {
     registerApiRoutes(router);
     registerAuthRoutes(router);
 
-    app.use(router.middleware())
+    app.use(router.routes())
         .use(router.allowedMethods());
 };
