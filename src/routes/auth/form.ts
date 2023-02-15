@@ -1,7 +1,7 @@
-import { doPasswordsMatch } from '../../api/crypto/passwords';
-import { SessionRepository } from '../../api/repository/session';
-import { UserRepository } from '../../api/repository/user';
-import { cookieNames } from '../../constants/cookies';
+import { doPasswordsMatch } from '../../api/crypto/passwords.js';
+import { SessionRepository } from '../../api/repository/session.js';
+import { UserRepository } from '../../api/repository/user.js';
+import { cookieNames } from '../../constants/cookies.js';
 import { formParser } from '../../middleware/forms.js';
 import { deserializeSession } from '../../middleware/session.js';
 import { RouteBuilder } from '../../models/route-builder.js';

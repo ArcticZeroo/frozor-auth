@@ -1,6 +1,6 @@
 import { Middleware } from 'koa';
-import { SessionRepository } from '../api/repository/session';
-import { cookieNames } from '../constants/cookies';
+import { SessionRepository } from '../api/repository/session.js';
+import { cookieNames } from '../constants/cookies.js';
 
 export const deserializeSession = (): Middleware => async (ctx) => {
 	if (ctx.user) {

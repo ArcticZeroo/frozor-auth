@@ -1,7 +1,7 @@
 import Duration from '@arcticzeroo/duration';
 import { Session, User } from '@prisma/client';
-import { generateSessionId } from '../crypto/keygen';
-import { prisma } from './client';
+import { generateSessionId } from '../crypto/keygen.js';
+import { prisma } from './client.js';
 
 const expirationTimeByType = {
 	temporary: new Duration({ minutes: 10 }),

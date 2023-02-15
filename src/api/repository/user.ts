@@ -1,5 +1,5 @@
 import { User } from '@prisma/client';
-import { prisma } from './client';
+import { prisma } from './client.js';
 
 export abstract class UserRepository {
 	public static async retrieveUserByEmail(email: string): Promise<User | null> {

@@ -1,7 +1,7 @@
 import { Context } from 'koa';
-import { ApplicationRepository } from '../api/repository/app';
+import { ApplicationRepository } from '../api/repository/app.js';
 import { maximumPasswordLength, minimumPasswordLength } from '../constants/passwords.js';
-import { FormFieldValue } from '../models/form';
+import { FormFieldValue } from '../models/form.js';
 import { ServiceContext } from '../models/koa.js';
 
 // Email validation is hard. We'll allow any email with any characters before the last @, then any characters with a

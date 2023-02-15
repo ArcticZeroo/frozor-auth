@@ -1,6 +1,6 @@
 import Koa from 'koa';
 import json from 'koa-json';
-import { registerRoutes } from '../routes';
+import { registerRoutes } from '../routes/index.js';
 
 const app = new Koa();
 
