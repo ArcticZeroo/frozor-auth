@@ -4,6 +4,7 @@ import { Middleware } from 'koa';
 import { httpContentType } from '../constants/content-type.js';
 import { IParsedForm } from '../models/form.js';
 import { IKoaState } from '../models/koa.js';
+import { suppressPromiseError } from '../util/async.js';
 
 const allowedContentTypes = [httpContentType.formMultipart, httpContentType.formMultipart];
 
@@ -25,12 +26,7 @@ const parseForm = async (request: IncomingMessage, options?: formidable.Options)
 
 export const formParser = (): Middleware<IKoaState> => {
     return async (ctx, next) => {
-        const contentType = ctx.request.headers['content-type']?.toLowerCase();
-
-        if (contentType && allowedContentTypes.includes(contentType)) {
-            ctx.state.form = await parseForm(ctx.req);
-        }
-
+        ctx.state.form = await suppressPromiseError(parseForm(ctx.req));
         return next();
     };
 };

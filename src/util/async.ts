@@ -1,0 +1,1 @@
+export const suppressPromiseError = <T>(promise: Promise<T>): Promise<T | undefined> => promise.catch(() => undefined);
