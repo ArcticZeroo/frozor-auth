@@ -3,7 +3,7 @@
     "module": "es2022",
     "target": "esnext",
     "sourceMap": true,
-    "moduleResolution": "Node",
+    "moduleResolution": "node16",
     "allowSyntheticDefaultImports": true,
     "noImplicitAny": true,
     "noUncheckedIndexedAccess": true,

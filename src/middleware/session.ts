@@ -1,7 +1,7 @@
 import { Middleware } from 'koa';
 import { SessionRepository } from '../api/repository/session.js';
 import { cookieNames } from '../constants/cookies.js';
-import { ServiceContext } from '../models/koa';
+import { ServiceContext } from '../models/koa.js';
 
 export const retrieveUserFromContext = async (ctx: ServiceContext) => {
 	if (ctx.state.user) {

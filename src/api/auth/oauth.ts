@@ -1,5 +1,5 @@
 import { Application, User } from '@prisma/client';
-import { ServiceContext } from '../../models/koa';
+import { ServiceContext } from '../../models/koa.js';
 
 interface IHandleOauthConsentParams {
 	ctx: ServiceContext,

@@ -1,11 +1,11 @@
-import { doPasswordsMatch } from '../../api/crypto/passwords.js';
-import { SessionRepository } from '../../api/repository/session.js';
-import { UserRepository } from '../../api/repository/user.js';
-import { cookieNames } from '../../constants/cookies.js';
-import { formParser } from '../../middleware/forms.js';
-import { deserializeSession } from '../../middleware/session.js';
-import { RouteBuilder } from '../../models/route-builder.js';
-import { setCookie } from '../../util/cookie.js';
+import { doPasswordsMatch } from '../../../api/crypto/passwords.js';
+import { SessionRepository } from '../../../api/repository/session.js';
+import { UserRepository } from '../../../api/repository/user.js';
+import { cookieNames } from '../../../constants/cookies.js';
+import { formParser } from '../../../middleware/forms.js';
+import { deserializeSession } from '../../../middleware/session.js';
+import { RouteBuilder } from '../../../models/route-builder.js';
+import { setCookie } from '../../../util/cookie.js';
 import {
     isValidEmail,
     isValidPassword,
@@ -13,9 +13,9 @@ import {
     validateOauthAppAndRedirect,
     validateRedirectUri,
     validateRequestValue
-} from '../../util/validation.js';
+} from '../../../util/validation.js';
 
-export const formRoutes: RouteBuilder = app => {
+export const loginRoutes: RouteBuilder = app => {
     app.post('/login', deserializeSession(), formParser(), async ctx => {
         if (ctx.state.user) {
             ctx.throw(403, 'Forbidden: User is already authenticated');
