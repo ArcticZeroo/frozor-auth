@@ -1,8 +1,9 @@
 import { Middleware } from 'koa';
 import { SessionRepository } from '../api/repository/session.js';
 import { cookieNames } from '../constants/cookies.js';
+import { ServiceContext } from '../models/koa';
 
-export const deserializeSession = (): Middleware => async (ctx) => {
+export const retrieveUserFromContext = async (ctx: ServiceContext) => {
 	if (ctx.user) {
 		return;
 	}
@@ -23,5 +24,14 @@ export const deserializeSession = (): Middleware => async (ctx) => {
 		return;
 	}
 
-	ctx.user = session.user;
+	return session.user;
+}
+
+export const deserializeSession = (): Middleware => async (ctx, next) => {
+	const user = await retrieveUserFromContext(ctx);
+	if (user) {
+		ctx.user = user;
+	}
+
+	return next();
 };
