@@ -17,7 +17,7 @@ import {
 
 export const formRoutes: RouteBuilder = app => {
     app.post('/login', deserializeSession(), formParser(), async ctx => {
-        if (ctx.user) {
+        if (ctx.state.user) {
             ctx.throw(403, 'Forbidden: User is already authenticated');
             return;
         }
@@ -52,7 +52,7 @@ export const formRoutes: RouteBuilder = app => {
             return;
         }
 
-        ctx.user = user;
+        ctx.state.user = user;
 
         const session = await SessionRepository.createSession(user, false /*isTemporaryNonce*/);
 

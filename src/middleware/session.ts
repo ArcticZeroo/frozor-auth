@@ -4,7 +4,7 @@ import { cookieNames } from '../constants/cookies.js';
 import { ServiceContext } from '../models/koa';
 
 export const retrieveUserFromContext = async (ctx: ServiceContext) => {
-	if (ctx.user) {
+	if (ctx.state.user) {
 		return;
 	}
 
@@ -30,7 +30,7 @@ export const retrieveUserFromContext = async (ctx: ServiceContext) => {
 export const deserializeSession = (): Middleware => async (ctx, next) => {
 	const user = await retrieveUserFromContext(ctx);
 	if (user) {
-		ctx.user = user;
+		ctx.state.user = user;
 	}
 
 	return next();

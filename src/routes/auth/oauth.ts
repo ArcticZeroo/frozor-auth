@@ -13,16 +13,16 @@ export const oauthRoutes: RouteBuilder = (app) => {
 
 		const application = await validateOauthAppAndRedirect({ ctx, clientId, redirectUri });
 
-		if (ctx.user) {
+		if (ctx.state.user) {
 			// todo
 			const isConsentRequired = false;
 
 			if (!isConsentRequired) {
-				const temporaryNonceSession = await SessionRepository.createSession(ctx.user, true /*isTemporaryNonce*/);
+				const temporaryNonceSession = await SessionRepository.createSession(ctx.state.user, true /*isTemporaryNonce*/);
 
 				ctx.redirect(buildRedirectUri({
 					baseUri: redirectUri,
-					userEmail: ctx.user.email,
+					userEmail: ctx.state.user.email,
 					token: temporaryNonceSession.token
 				}));
 			} else {
