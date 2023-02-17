@@ -3,7 +3,7 @@ import { buildRedirectUri } from '../../api/auth/oauth.js';
 import { SessionRepository } from '../../api/repository/session.js';
 import { deserializeSession } from '../../middleware/session.js';
 import { RouteBuilder } from '../../models/route-builder.js';
-import { staticFolderPath } from '../../server/config.js';
+import { reactClientFolderPath, staticFolderPath } from '../../server/config.js';
 import { validateClientId, validateOauthAppAndRedirect, validateRedirectUri } from '../../util/validation.js';
 
 export const oauthRoutes: RouteBuilder = (app) => {
@@ -32,6 +32,6 @@ export const oauthRoutes: RouteBuilder = (app) => {
 			return;
 		}
 
-		await send(ctx, 'auth/login.html', { root: staticFolderPath });
+		await send(ctx, 'build/index.html', { root: reactClientFolderPath });
 	});
 };

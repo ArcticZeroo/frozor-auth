@@ -1,26 +1,21 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useState } from 'react';
+import { MainCarousel } from './components/pages/carousel';
+import { EmailContext } from './context/auth';
+import { PageStateContext } from './context/page';
 import './App.css';
+import { PageState } from './models/page';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+	const [pageState, setPageState] = useState(PageState.login);
+	const [email, setEmail] = useState('');
+
+	return (
+		<PageStateContext.Provider value={{ pageState, setPageState }}>
+			<EmailContext.Provider value={{ email, onEmailChanged: setEmail }}>
+				<MainCarousel/>
+			</EmailContext.Provider>
+		</PageStateContext.Provider>
+	);
 }
 
 export default App;
