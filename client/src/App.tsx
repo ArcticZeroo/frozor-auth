@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { MainCarousel } from './components/pages/carousel';
 import { EmailContext } from './context/auth';
 import { PageStateContext } from './context/page';
-import './App.css';
 import { PageState } from './models/page';
 
 function App() {
