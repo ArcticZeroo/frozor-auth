@@ -1,5 +1,12 @@
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { IconButton, TextField } from '@mui/material';
+import styled from 'styled-components';
+
+const PasswordInputContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  flex-grow: 1;
+`;
 
 interface IPasswordInputProps {
 	password: string,
@@ -24,15 +31,19 @@ export const PasswordInput: React.FC<IPasswordInputProps> = ({
 	};
 
 	return (
-		<div>
+		<PasswordInputContainer>
 			<TextField id="password" label="Password"
 			           value={password}
 			           onChange={event => onPasswordChanged(event.target.value)}
 			           type={showPassword ? 'text' : 'password'}
 			           error={errorText != null}
 			           helperText={errorText}
+			           fullWidth
 			/>
-			<IconButton aria-label="password-visibility" onClick={onShowPasswordButtonClicked}>
+			<IconButton
+				aria-label={showPassword ? 'Click to hide password' : 'Click to show password'}
+				onClick={onShowPasswordButtonClicked}
+			>
 				{
 					showPassword && <Visibility/>
 				}
@@ -40,6 +51,6 @@ export const PasswordInput: React.FC<IPasswordInputProps> = ({
 					!showPassword && <VisibilityOff/>
 				}
 			</IconButton>
-		</div>
+		</PasswordInputContainer>
 	);
 };

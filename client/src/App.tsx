@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { MainCarousel } from './components/pages/carousel';
+import { MainTabView } from './components/pages/tab-view';
 import { EmailContext } from './context/auth';
 import { PageStateContext } from './context/page';
 import { PageState } from './models/page';
@@ -11,7 +11,7 @@ function App() {
 	return (
 		<PageStateContext.Provider value={{ pageState, setPageState }}>
 			<EmailContext.Provider value={{ email, onEmailChanged: setEmail }}>
-				<MainCarousel/>
+				<MainTabView/>
 			</EmailContext.Provider>
 		</PageStateContext.Provider>
 	);
