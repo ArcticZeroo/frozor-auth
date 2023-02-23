@@ -22,6 +22,7 @@ const FormContainer = styled.div`
 
 export const MainTabView: React.FC = () => {
 	const [error, setError] = useState('');
+	const [email, setEmail] = useState('');
 	const { pageState } = useContext(PageStateContext);
 	const [tabIndex, setTabIndex] = useState(0);
 
@@ -44,8 +45,8 @@ export const MainTabView: React.FC = () => {
 					<Tab label="Forgot Password"/>
 				</Tabs>
 				<FormContainer>
-					{tabIndex === 0 && <LoginForm/>}
-					{tabIndex === 1 && <SignupForm/>}
+					{tabIndex === 0 && <LoginForm email={email} onEmailChanged={setEmail}/>}
+					{tabIndex === 1 && <SignupForm email={email} onEmailChanged={setEmail}/>}
 				</FormContainer>
 				{ error && <div>{error}</div> }
 			</CardContent>

@@ -1,10 +1,14 @@
 import { Button } from '@mui/material';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { EmailInput } from '../input/email';
 import { PasswordInput } from '../input/password';
 
-export const LoginForm: React.FC = () => {
-	const [email, setEmail] = useState('');
+interface ILoginFormProps {
+	email: string,
+	onEmailChanged(email: string): void
+}
+
+export const LoginForm: React.FC<ILoginFormProps> = ({ email, onEmailChanged }) => {
 	const [password, setPassword] = useState('');
 	const [showPassword, setShowPassword] = useState(false);
 
@@ -14,7 +18,7 @@ export const LoginForm: React.FC = () => {
 
 	return (
 		<>
-			<EmailInput email={email} onEmailChanged={setEmail}
+			<EmailInput email={email} onEmailChanged={onEmailChanged}
 			            id="email" label="Email"/>
 			<PasswordInput password={password} onPasswordChanged={setPassword}
 			               showPassword={showPassword} onShowPasswordChanged={setShowPassword}/>

@@ -3,8 +3,12 @@ import React, { useState } from 'react';
 import { EmailInput } from '../input/email';
 import { PasswordInput } from '../input/password';
 
-export const SignupForm: React.FC = () => {
-	const [email, setEmail] = useState('');
+interface ISignupForm {
+	email: string,
+	onEmailChanged(email: string): void
+}
+
+export const SignupForm: React.FC<ISignupForm> = ({ email, onEmailChanged }) => {
 	const [confirmEmail, setConfirmEmail] = useState('');
 	const [password, setPassword] = useState('');
 	const [showPassword, setShowPassword] = useState(false);
@@ -15,7 +19,7 @@ export const SignupForm: React.FC = () => {
 
 	return (
 		<>
-			<EmailInput email={email} onEmailChanged={setEmail}
+			<EmailInput email={email} onEmailChanged={onEmailChanged}
 			            id="email" label="Email"/>
 			<EmailInput email={confirmEmail} onEmailChanged={setConfirmEmail}
 			            id="confirm-email" label="Confirm Email"/>
